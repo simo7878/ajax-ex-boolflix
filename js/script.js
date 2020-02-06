@@ -73,8 +73,12 @@ $(document).ready(function() {
 
 //funzione stampa films
 function stampaFilms(films) {
-  $('#lista_films').text('');
+
   var source = $("films-template").html();
   var template = Handlebars.compile(source);
 
+  for (var i = 0; i < listaFilms.length; i++) {
+    selezioneFilms = listaFilms[i];
+    console.log(selezioneFilms);
+  }
 }
