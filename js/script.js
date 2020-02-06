@@ -38,7 +38,7 @@
 //            "release_date": "1974-07-11"
 //        }
 
-var query = "La leggenda dei 7 vampiri d/'oro"
+var query = "La leggenda dei 7 vampiri d'oro";
 
 $(document).ready(function() {
 //click button
@@ -52,11 +52,11 @@ $(document).ready(function() {
       method: 'GET',
       data: {
       api_key: '2a2c79fd61e1298f64644ca23a969bd0',
-      query: query,
+      query: "La leggenda dei 7 vampiri d'oro",
       language: 'it-IT'
     },
       success: function(data){
-      console.log(data);
+      //console.log(data);
       var listaFilms = data.results;
       console.log(listaFilms);
     },
@@ -80,5 +80,15 @@ function stampaFilms(films) {
   for (var i = 0; i < listaFilms.length; i++) {
     selezioneFilms = listaFilms[i];
     console.log(selezioneFilms);
+
+    var context = {
+      titolo : selezioneFilms.title,
+      titolo_originale : selezioneFilms.original_title,
+      lingua_originale : selezioneFilms.original_language,
+      voti : selezioneFilms.vote_average
+
+    };
+    var html = template(context);
+   $('#lista_films').append(html);
   }
 }
