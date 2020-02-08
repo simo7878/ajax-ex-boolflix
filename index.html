@@ -4,25 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- HANDLEBARS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js" integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU=" crossorigin="anonymous"></script>
+    <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- FONTAWSOME -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js" charset="utf-8"></script>
+      <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <title>Boolflix</title>
+    <title>Boolfix</title>
   </head>
   <body>
     <header>
-        <div class="logo">
-        </div>
         <div class="nav_research">
-          <input type="text" id="research">
+          <input id="query" type="text" name="" value="">
           <button type="button" name="button" id="button_research">Cerca</button>
         </div>
-
     </header>
-      <ul class="covers">
 
-      </ul>
-
+    <ul class="covers"></ul>
 
     <script id="films-template" type="text/x-handlebars-template">
       <li>
@@ -31,12 +31,17 @@
           <li>Titolo Originale: {{"original_title"}}</li>
           <li>Lingua Originale: {{"original_language"}}</li>
           <li>Voto: {{"vote_average"}}</li>
-        
+
+
+
         </ul>
       </li>
 
     </script>
+    <script id="nessun-risultato-template" type="text/x-handlebars-template">
+      <li>Non ci sono risultati</li>
 
+    </script>
     <script src="js/script.js" charset="utf-8"></script>
   </body>
 </html>

@@ -40,79 +40,87 @@
 
 
 
+//alert('ciao');
 $(document).ready(function() {
-//click button
+  //click button
   $('#button_research').click(function() {
-    var research = $('input').val();
+    var query = $('#query').val();
+    ricercaFilms(query);
     resetRicerca();
-    ricercaFilms();
+  });
+});
 
 
+
+
+
+
+
+
+
+//-----------FUNZIONI-------------
+
+//FUNZIONE RICERCA FILMS
 function ricercaFilms(string) {
-  //chiamata ajax
-    $.ajax(
-      {
-        url : 'https://api.themoviedb.org/3/search/movie',
-        method: 'GET',
-        data: {
-        api_key: '2a2c79fd61e1298f64644ca23a969bd0',
-        query: string,
-        language: 'it-IT'
+  //effettuo chiamata ajax
+  var api_key = '2a2c79fd61e1298f64644ca23a969bd0';
+  var url = 'https://api.themoviedb.org/3/search/movie';
+  $.ajax(
+    {
+      url : url,
+      method : 'GET',
+      data : {
+      api_key : api_key,
+      query : string,
+      language : 'it-IT'
       },
-        success: function(data){
-          if (data.total_results > 0) {
-            var films = data.results;
-            stampaFilms(films);
-          } else {
-            resetRicerca();
-            ricercaFilms();
- 
-          }
+      succes : function(data) {
+        if (total_results > 0 ) {
+          var films = data.results;
+          stampaFilms(films);
+        } else {
+          resetRicerca();
+          stampaNessunRisultato();
+        }
 
       },
-        error: function(request, state, errors){
+      error : function(request, state, errors) {
         console.log(errors);
       }
-    });
 
+  });
+}
 
-
-
-
-
-//---------FUNZIONI-----------
-
-//funzione reset ricerca
+//FUNZIONE RESET RICERCA
 function resetRicerca() {
   $('.covers').html('');
-  $('#research').val();
+  $('#query').val('');
 }
 
-//funzione stampa nessun risultato
-function nessunRisultato() {
-  var source = $("films-template").html();
+//FUNZIONE STAMPA FILMS
+function stampaFilms(films) {
+  var source = $("#films-template").html();
+  var template = Handlebars.compile(source);
+
+for (var i = 0; i < films.length; i++) {
+  var thisFilm = films[i];
+  console.log(thisFilm);
+
+  var context = {
+    titolo : thisFilm.title,
+    titolo_originale : thisFilm.original_title,
+    lingua_originale : thisFilm.original_language,
+    voto : thisFilm.vote_average
+  };
+}
+
+  var html = template(context);
+  $('.covers').append(html);
+}
+//FUNZIONE CHE STAMPA NESSUN RISULTATO
+function stampaNessunRisultato() {
+  var source = $("nessun-risultato-template").html();
   var template = Handlebars.compile(source);
   var html = template();
-}
-
-//funzione stampa films
-function stampaFilms(films) {
-
-  var source = $("films-template").html();
-  var template = Handlebars.compile(source);
-
-  for (var i = 0; i < listaFilms.length; i++) {
-    var selezioneFilms = listaFilms[i];
-    console.log(selezioneFilms);
-
-    var context = {
-      titolo : selezioneFilms.title,
-      titolo_originale : selezioneFilms.original_title,
-      lingua_originale : selezioneFilms.original_language,
-      voti : selezioneFilms.vote_average
-
-    };
-    var html = template(context);
-   $('.cover').append(html);
-  }
+    $('.covers').append(html);
 }
