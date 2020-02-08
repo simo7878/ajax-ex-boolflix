@@ -19,16 +19,20 @@
         </div>
 
     </header>
+      <ul class="covers">
 
-      <ul id="lista_films">
       </ul>
 
+
     <script id="films-template" type="text/x-handlebars-template">
-      <li class="films">
-        <li>{{"title"}}</li>
-        <li>{{"original_title"}}</li>
-        <li>{{"original_language"}}</li>
-        <li>{{"vote_average"}}</li>
+      <li>
+        {{title}}
+        <ul>
+          <li>Titolo Originale: {{"original_title"}}</li>
+          <li>Lingua Originale: {{"original_language"}}</li>
+          <li>Voto: {{"vote_average"}}</li>
+        
+        </ul>
       </li>
 
     </script>

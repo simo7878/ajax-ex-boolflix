@@ -38,38 +38,62 @@
 //            "release_date": "1974-07-11"
 //        }
 
-var query = "La leggenda dei 7 vampiri d'oro";
+
 
 $(document).ready(function() {
 //click button
-  $('button').click(function() {
+  $('#button_research').click(function() {
     var research = $('input').val();
+    resetRicerca();
+    ricercaFilms();
 
-//chiamata ajax
-  $.ajax(
-    {
-      url : 'https://api.themoviedb.org/3/search/movie',
-      method: 'GET',
-      data: {
-      api_key: '2a2c79fd61e1298f64644ca23a969bd0',
-      query: "La leggenda dei 7 vampiri d'oro",
-      language: 'it-IT'
-    },
-      success: function(data){
-      //console.log(data);
-      var listaFilms = data.results;
-      console.log(listaFilms);
-    },
-      error: function(request, state, errors){
-      console.log(errors);
-    }
+
+function ricercaFilms(string) {
+  //chiamata ajax
+    $.ajax(
+      {
+        url : 'https://api.themoviedb.org/3/search/movie',
+        method: 'GET',
+        data: {
+        api_key: '2a2c79fd61e1298f64644ca23a969bd0',
+        query: string,
+        language: 'it-IT'
+      },
+        success: function(data){
+          if (data.total_results > 0) {
+            var films = data.results;
+            stampaFilms(films);
+          } else {
+            resetRicerca();
+            ricercaFilms();
+ 
+          }
+
+      },
+        error: function(request, state, errors){
+        console.log(errors);
+      }
     });
 
 
-  });
-});
+
+
+
 
 //---------FUNZIONI-----------
+
+//funzione reset ricerca
+function resetRicerca() {
+  $('.covers').html('');
+  $('#research').val();
+}
+
+//funzione stampa nessun risultato
+function nessunRisultato() {
+  var source = $("films-template").html();
+  var template = Handlebars.compile(source);
+  var html = template();
+}
 
 //funzione stampa films
 function stampaFilms(films) {
@@ -78,7 +102,7 @@ function stampaFilms(films) {
   var template = Handlebars.compile(source);
 
   for (var i = 0; i < listaFilms.length; i++) {
-    selezioneFilms = listaFilms[i];
+    var selezioneFilms = listaFilms[i];
     console.log(selezioneFilms);
 
     var context = {
@@ -89,6 +113,6 @@ function stampaFilms(films) {
 
     };
     var html = template(context);
-   $('#lista_films').append(html);
+   $('.cover').append(html);
   }
 }
